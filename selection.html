@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKUS — Select Coursework</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-glow" aria-hidden="true"></div>
+    <main class="page selection-page">
+        <section class="section hero compact-hero">
+            <h1>Markus Intake Form</h1>
+            <p class="tagline">Tell Markus what you study so we can prepare the perfect assessment flow.</p>
+            <div class="divider" aria-hidden="true"></div>
+        </section>
+
+        <section class="section selection-stage" data-stage="level">
+            <header class="section-header">
+                <h2>Where do you study?</h2>
+                <p>Select the programme that matches your coursework.</p>
+            </header>
+            <div class="choice-grid" role="list">
+                <button class="choice-card" data-level="high-school">
+                    <span class="choice-title">High School (GCSE)</span>
+                    <span class="choice-subtitle">GCSE coursework, NEA, controlled assessments.</span>
+                </button>
+                <button class="choice-card" data-level="a-level">
+                    <span class="choice-title">A Level</span>
+                    <span class="choice-subtitle">NEA projects, essays, creative portfolios.</span>
+                </button>
+                <button class="choice-card" data-level="btec">
+                    <span class="choice-title">BTEC</span>
+                    <span class="choice-subtitle">Applied and vocational coursework.</span>
+                </button>
+                <div class="choice-card disabled" aria-disabled="true">
+                    <span class="choice-title">University <small>(Coming soon)</small></span>
+                    <span class="choice-subtitle">We&rsquo;ll email you when it&rsquo;s ready.</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section selection-stage is-hidden" data-stage="format">
+            <header class="section-header">
+                <h2>Select your coursework format</h2>
+                <p>Choose the type of work you&rsquo;re submitting.</p>
+            </header>
+            <div id="format-options" class="choice-grid"></div>
+        </section>
+
+        <section class="section selection-stage is-hidden" data-stage="course">
+            <header class="section-header">
+                <h2>Choose your subject</h2>
+                <p>Select the coursework assignment that fits best.</p>
+            </header>
+            <div id="course-options" class="course-list"></div>
+        </section>
+
+        <section class="section selection-stage is-hidden" data-stage="exam-board">
+            <header class="section-header">
+                <h2>Select your exam board</h2>
+                <p>We tailor feedback to the standards you follow.</p>
+            </header>
+            <div id="board-options" class="choice-grid small-grid"></div>
+        </section>
+
+        <section class="section selection-stage is-hidden" data-stage="summary">
+            <header class="section-header">
+                <h2>Your intake summary</h2>
+                <p>Review and confirm before uploading your coursework.</p>
+            </header>
+            <div class="summary-card">
+                <dl>
+                    <div>
+                        <dt>Programme</dt>
+                        <dd id="summary-programme"></dd>
+                    </div>
+                    <div>
+                        <dt>Coursework Type</dt>
+                        <dd id="summary-format"></dd>
+                    </div>
+                    <div>
+                        <dt>Subject</dt>
+                        <dd id="summary-course"></dd>
+                    </div>
+                    <div>
+                        <dt>Exam Board</dt>
+                        <dd id="summary-board"></dd>
+                    </div>
+                    <div>
+                        <dt>Accepted Formats</dt>
+                        <dd id="summary-accepts"></dd>
+                    </div>
+                </dl>
+                <button class="cta-button inline" id="continue-to-upload">Continue to upload</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="selection.js" defer></script>
+</body>
+</html>

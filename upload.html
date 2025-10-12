@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKUS — Upload Coursework</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-glow" aria-hidden="true"></div>
+    <main class="page upload-page">
+        <section class="section hero compact-hero">
+            <h1>Upload Your Coursework</h1>
+            <p class="tagline" id="upload-subtitle">Loading your intake...</p>
+            <div class="selection-pills" id="selection-pills"></div>
+            <div class="divider" aria-hidden="true"></div>
+        </section>
+
+        <section class="section bubble-shell">
+            <header class="section-header">
+                <h2 id="bubble-title">Getting things ready</h2>
+                <p id="bubble-description">Markus is setting up the perfect upload environment.</p>
+            </header>
+
+            <div class="upload-bubble" id="upload-bubble">
+                <div class="bubble-inner" id="bubble-inner">
+                    <p class="bubble-instruction" id="bubble-instruction">Hang tight a second...</p>
+                    <button class="ghost-button is-hidden" id="bubble-action">Choose files</button>
+                    <textarea class="bubble-textarea is-hidden" id="bubble-textarea" placeholder="Paste or type your coursework here..."></textarea>
+                </div>
+                <input class="is-hidden" type="file" id="file-input" multiple>
+            </div>
+            <div class="bubble-footnote" id="bubble-footnote"></div>
+        </section>
+
+        <section class="section is-hidden" id="hint-section">
+            <div class="hint-card">
+                <p>You can split your work into the categories.</p>
+                <button class="cta-button inline" id="acknowledge-hint">OKAY</button>
+            </div>
+        </section>
+
+        <section class="section is-hidden" id="uploads-section">
+            <header class="section-header">
+                <h2>Your uploaded files</h2>
+                <p>Everything is sequenced in the order you submitted.</p>
+            </header>
+            <ul class="file-list" id="file-list"></ul>
+        </section>
+
+        <section class="section is-hidden" id="categories-section">
+            <header class="section-header">
+                <h2>Categories</h2>
+                <p>Group related files together before you hand them in.</p>
+            </header>
+            <div class="category-toolbar">
+                <button class="ghost-button" id="add-category">Add the category</button>
+                <button class="ghost-button is-hidden" id="finish-categories">FINISH</button>
+            </div>
+            <div class="category-list" id="category-list"></div>
+            <div class="category-dialog is-hidden" id="category-dialog">
+                <label for="category-name" class="dialog-label">Name your category</label>
+                <input id="category-name" type="text" placeholder="f.e.: the theme - &quot;Paris trip&quot;">
+                <div class="dialog-actions">
+                    <button class="ghost-button" id="cancel-category">Cancel</button>
+                    <button class="cta-button inline" id="confirm-category">Save</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="section is-hidden" id="finalise-section">
+            <header class="section-header">
+                <h2>Ready for Markus?</h2>
+                <p>This packages your coursework and metadata for the assessment engine.</p>
+            </header>
+            <div class="summary-card">
+                <button class="cta-button" id="create-package">NEXT STEP</button>
+                <p class="package-status" id="package-status"></p>
+            </div>
+        </section>
+    </main>
+
+    <aside class="preview-overlay is-hidden" id="preview-overlay" role="dialog" aria-modal="true">
+        <div class="preview-frame">
+            <button class="ghost-button close-preview" id="close-preview" aria-label="Close preview">✕</button>
+            <div class="preview-content" id="preview-content"></div>
+            <div class="preview-caption" id="preview-caption"></div>
+        </div>
+    </aside>
+
+    <script src="upload.js" defer></script>
+</body>
+</html>
