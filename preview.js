@@ -365,7 +365,6 @@
         if (!root) return null;
         return {
             root,
-            value: root.querySelector(".detail-card__value"),
             note: root.querySelector(".detail-card__note"),
             gauge: root.querySelector(".speedometer")
         };
@@ -399,8 +398,6 @@
         const baselineY = frame.height - frame.padding.bottom;
         const values = series.length > 1 ? series : [series[0], series[0]];
         const lastIndex = values.length - 1 || 1;
-        const labelCount = Math.max(series.length, 1);
-        const labelLastIndex = Math.max(labelCount - 1, 1);
 
         const coords = values.map((value, index) => {
             const ratio = lastIndex === 0 ? 0 : index / lastIndex;
@@ -433,8 +430,9 @@
         baseline.setAttribute("vector-effect", "non-scaling-stroke");
         detailAxisX.appendChild(baseline);
 
-        for (let i = 0; i < labelCount; i += 1) {
-            const ratio = labelCount === 1 ? 0 : i / labelLastIndex;
+        const xLabels = [0, 20, 40, 60, 80, 100];
+        xLabels.forEach((label) => {
+            const ratio = xLabels.length === 1 ? 0 : label / 100;
             const x = frame.padding.left + ratio * usableWidth;
             const tick = document.createElementNS("http://www.w3.org/2000/svg", "line");
             tick.setAttribute("x1", String(x));
@@ -448,9 +446,9 @@
             text.setAttribute("x", String(x));
             text.setAttribute("y", String(baselineY + 11));
             text.setAttribute("text-anchor", "middle");
-            text.textContent = String(i + 1);
+            text.textContent = String(label);
             detailAxisX.appendChild(text);
-        }
+        });
 
         const leftAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
         leftAxis.setAttribute("x1", String(frame.padding.left));
@@ -460,8 +458,17 @@
         leftAxis.setAttribute("vector-effect", "non-scaling-stroke");
         detailAxisY.appendChild(leftAxis);
 
-        [100, 80, 60, 40, 20].forEach((mark) => {
-            const y = baselineY - (mark / 100) * usableHeight;
+        const gradeMarks = [
+            { value: 90, label: "A" },
+            { value: 80, label: "B" },
+            { value: 70, label: "C" },
+            { value: 60, label: "D" },
+            { value: 50, label: "E" },
+            { value: 40, label: "F" }
+        ];
+
+        gradeMarks.forEach((mark) => {
+            const y = baselineY - (mark.value / 100) * usableHeight;
             const grid = document.createElementNS("http://www.w3.org/2000/svg", "line");
             grid.setAttribute("x1", String(frame.padding.left));
             grid.setAttribute("x2", String(frame.padding.left + usableWidth));
@@ -474,31 +481,9 @@
             text.setAttribute("x", String(frame.padding.left - 4));
             text.setAttribute("y", String(y + 2));
             text.setAttribute("text-anchor", "end");
-            text.textContent = String(mark);
+            text.textContent = mark.label;
             detailAxisY.appendChild(text);
         });
-    };
-
-    const applyDetailTransform = (card) => {
-        if (!metricDetail || !card) return;
-
-        metricDetail.style.setProperty("--detail-translate-x", "0px");
-        metricDetail.style.setProperty("--detail-translate-y", "0px");
-        metricDetail.style.setProperty("--detail-scale-x", "1");
-        metricDetail.style.setProperty("--detail-scale-y", "1");
-
-        const detailRect = metricDetail.getBoundingClientRect();
-        const cardRect = card.getBoundingClientRect();
-
-        const translateX = cardRect.left + cardRect.width / 2 - (detailRect.left + detailRect.width / 2);
-        const translateY = cardRect.top + cardRect.height / 2 - (detailRect.top + detailRect.height / 2);
-        const scaleX = cardRect.width / detailRect.width;
-        const scaleY = cardRect.height / detailRect.height;
-
-        metricDetail.style.setProperty("--detail-translate-x", `${translateX}px`);
-        metricDetail.style.setProperty("--detail-translate-y", `${translateY}px`);
-        metricDetail.style.setProperty("--detail-scale-x", scaleX);
-        metricDetail.style.setProperty("--detail-scale-y", scaleY);
     };
 
     const closeMetricDetail = ({ immediate = false } = {}) => {
@@ -511,8 +496,6 @@
         const finalize = () => {
             metricDetail.classList.remove("is-visible");
             metricDetail.classList.remove("is-active");
-            metricDetail.style.removeProperty("--detail-translate-x");
-            metricDetail.style.removeProperty("--detail-translate-y");
             metricDetail.style.removeProperty("--detail-scale-x");
             metricDetail.style.removeProperty("--detail-scale-y");
             metricDetail.style.removeProperty("--metric-detail-bg");
@@ -544,7 +527,6 @@
         }
 
         detailLock = true;
-        applyDetailTransform(card);
         metricDetail.classList.remove("is-active");
 
         const handle = (event) => {
@@ -560,6 +542,8 @@
         if (!metricDetail || !detailTitle || !detailComment || !detailCards || detailLock) {
             return;
         }
+
+        portalizeOnce(metricDetail);
 
         if (activeMetricCard === card && metricDetail.classList.contains("is-active")) {
             closeMetricDetail();
@@ -589,14 +573,12 @@
 
         const structureCard = detailCards.structure;
         if (structureCard && detail.structure) {
-            if (structureCard.value) structureCard.value.textContent = `${clamp(detail.structure.value, 0, 100)}%`;
             if (structureCard.note) structureCard.note.textContent = detail.structure.note;
             applySpeedometerValue(structureCard.gauge, detail.structure.value);
         }
 
         const tenseCard = detailCards.tense;
         if (tenseCard && detail.tense) {
-            if (tenseCard.value) tenseCard.value.textContent = `${clamp(detail.tense.value, 0, 100)}%`;
             if (tenseCard.note) tenseCard.note.textContent = detail.tense.note;
             applySpeedometerValue(tenseCard.gauge, detail.tense.value);
         }
@@ -604,7 +586,6 @@
         const aiCard = detailCards.ai;
         if (aiCard && detail.ai) {
             if (aiCard.note) aiCard.note.textContent = detail.ai.note;
-            if (aiCard.value) aiCard.value.textContent = `${clamp(detail.ai.value || 0, 0, 100)}%`;
             if (aiCard.gauge) applySpeedometerValue(aiCard.gauge, detail.ai.value || 0);
         }
 
@@ -617,15 +598,69 @@
             if (slot?.root) slot.root.style.setProperty("--detail-card-bg", colors.card);
         });
 
+        metricDetail.scrollTop = 0;
+
         requestAnimationFrame(() => {
-            applyDetailTransform(card);
-            requestAnimationFrame(() => {
-                analysisBoard?.classList.add("analysis-board--dimmed");
-                metricDetail.classList.add("is-active");
-                detailClose?.focus({ preventScroll: true });
-            });
+            analysisBoard?.classList.add("analysis-board--dimmed");
+            metricDetail.classList.add("is-active");
+            detailClose?.focus({ preventScroll: true });
         });
     };
+    // Helper to portalize an element to body only once
+    function portalizeOnce(el) {
+    if (!el) return;
+    if (el.dataset.portalized === '1') return;
+    document.body.appendChild(el);
+    el.dataset.portalized = '1';
+    }
+    /* ===== Complain FAB + Panel (viewport-fixed) ===== */
+    const complainPanel = document.querySelector('.complain-panel');
+    if (complainPanel) {
+        // Create FAB lazily if not present
+        let complainFab = document.querySelector('.complain-fab');
+        if (!complainFab) {
+            complainFab = document.createElement('button');
+            complainFab.className = 'complain-fab';
+            complainFab.type = 'button';
+            complainFab.setAttribute('aria-label', 'Open complain panel');
+            complainFab.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3C7.03 3 3 6.58 3 11c0 2.3 1.12 4.37 2.94 5.82-.08.69-.35 1.91-1.22 3.12 0 0 1.72-.26 3.08-1.13.96.28 1.98.44 3.2.44 4.97 0 9-3.58 9-8s-4.03-8-9-8z" stroke="currentColor" stroke-width="1.4"/></svg>';
+            document.body.appendChild(complainFab);
+        }
+
+        const setComplainOpen = (open) => {
+            portalizeOnce(complainPanel);
+            if (open) {
+                complainPanel.hidden = false;
+                complainPanel.classList.add('is-open');
+                complainFab.setAttribute('aria-expanded', 'true');
+                // Focus first focusable in panel
+                const input = complainPanel.querySelector('textarea, input, button');
+                input?.focus({ preventScroll: true });
+            } else {
+                complainPanel.classList.remove('is-open');
+                complainFab.setAttribute('aria-expanded', 'false');
+                // Delay hiding to allow transition out
+                setTimeout(() => { complainPanel.hidden = true; }, 220);
+                complainFab.focus({ preventScroll: true });
+            }
+        };
+
+        complainFab.addEventListener('click', () => {
+            const isOpen = complainPanel.classList.contains('is-open');
+            setComplainOpen(!isOpen);
+        });
+
+        // Close on Escape when open
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && complainPanel.classList.contains('is-open')) {
+                setComplainOpen(false);
+            }
+        });
+
+        // Ensure panel starts hidden and portalized for fixed positioning
+        complainPanel.hidden = true;
+        portalizeOnce(complainPanel);
+    }
 
     metricCards.forEach((card) => {
         const metricKey = card.dataset.metric;
@@ -858,8 +893,12 @@
     /* Rate panel */
     const rateTrigger = document.querySelector(".rate-trigger");
     const ratePanel = document.querySelector(".rate-panel");
-    const rateSlider = document.querySelector(".rate-slider");
-    const rateValue = document.querySelector("[data-rate-label]");
+    const ratePanelInner = ratePanel?.querySelector(".rate-panel__inner");
+    const rateClose = ratePanel?.querySelector(".rate-panel__close");
+    const rateSlider = ratePanel?.querySelector(".rate-slider");
+    const rateValue = ratePanel?.querySelector("[data-rate-label]");
+    const rateNoteInput = ratePanel?.querySelector(".rate-note");
+    const rateSendButton = ratePanel?.querySelector(".rate-send");
     const gradeSteps = ["F", "E", "D", "C", "B", "A"];
 
     const updateRateValue = () => {
@@ -869,21 +908,57 @@
         rateValue.textContent = label;
     };
 
+    const setRatePanelVisible = (visible) => {
+        if (!ratePanel) return;
+        if (visible) {
+            if (!ratePanel.hidden) return;
+            portalizeOnce(ratePanel);
+            ratePanel.hidden = false;
+            ratePanel.scrollTop = 0;
+            ratePanelInner?.scrollTo({ top: 0 });
+            document.body.classList.add("rate-panel-open");
+            rateTrigger?.setAttribute("aria-expanded", "true");
+            // ARIA roles for accessibility
+            if (!ratePanel.hasAttribute("role")) ratePanel.setAttribute("role", "dialog");
+            ratePanel.setAttribute("aria-modal", "true");
+            requestAnimationFrame(() => {
+                const focusTarget = rateSlider || ratePanel.querySelector("button, input, textarea");
+                focusTarget?.focus({ preventScroll: true });
+            });
+        } else {
+            if (ratePanel.hidden) return;
+            ratePanel.hidden = true;
+            document.body.classList.remove("rate-panel-open");
+            rateTrigger?.setAttribute("aria-expanded", "false");
+            rateTrigger?.focus({ preventScroll: true });
+        }
+    };
+
     rateTrigger?.addEventListener("click", () => {
         if (!ratePanel) return;
-        const isHidden = ratePanel.hidden;
-        ratePanel.hidden = !isHidden;
-        rateTrigger.setAttribute("aria-expanded", String(isHidden));
-        if (isHidden) {
-            ratePanel.scrollIntoView({ behavior: "smooth", block: "start" });
+        setRatePanelVisible(ratePanel.hidden);
+    });
+
+    rateClose?.addEventListener("click", () => {
+        setRatePanelVisible(false);
+    });
+
+    ratePanel?.addEventListener("click", (event) => {
+        if (!ratePanelInner) return;
+        if (!ratePanelInner.contains(event.target)) {
+            setRatePanelVisible(false);
+        }
+    });
+
+    window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && ratePanel && !ratePanel.hidden) {
+            setRatePanelVisible(false);
         }
     });
 
     rateSlider?.addEventListener("input", updateRateValue);
     updateRateValue();
 
-    const rateNoteInput = document.querySelector(".rate-note");
-    const rateSendButton = document.querySelector(".rate-send");
     rateSendButton?.addEventListener("click", () => {
         if (!rateSendButton.disabled) {
             rateSendButton.disabled = true;
@@ -937,53 +1012,6 @@ startxref
             URL.revokeObjectURL(link.href);
             link.remove();
         }, 200);
-    });
-
-    /* Complain panel */
-    const complainTrigger = document.querySelector(".complain-trigger");
-    const complainPanel = document.querySelector(".complain-panel");
-    const complainTextarea = complainPanel?.querySelector("textarea");
-    const complainSend = complainPanel?.querySelector(".complain-send");
-    const complainChat = complainPanel?.querySelector(".complain-panel__chat");
-
-    complainTrigger?.addEventListener("click", () => {
-        if (!complainPanel) return;
-        const isHidden = complainPanel.hidden;
-        complainPanel.hidden = !isHidden;
-        complainTrigger.setAttribute("aria-expanded", String(isHidden));
-        if (isHidden) {
-            complainPanel.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    });
-
-    const escapeHtml = (value) =>
-        value
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
-
-    complainSend?.addEventListener("click", () => {
-        if (!complainTextarea || !complainChat) return;
-        const message = complainTextarea.value.trim();
-        if (!message) return;
-        complainTextarea.value = "";
-
-        const userBubble = document.createElement("div");
-        userBubble.className = "chat-bubble chat-bubble--user";
-        userBubble.innerHTML = `<p>${escapeHtml(message)}</p>`;
-        complainChat.appendChild(userBubble);
-        userBubble.scrollIntoView({ behavior: "smooth", block: "end" });
-
-        setTimeout(() => {
-            const aiReply = document.createElement("div");
-            aiReply.className = "chat-bubble chat-bubble--ai";
-            aiReply.innerHTML =
-                "<p>Thanks for flagging this. I have logged your concern so a human examiner can re-check the report within 24 hours.</p>";
-            complainChat.appendChild(aiReply);
-            aiReply.scrollIntoView({ behavior: "smooth", block: "end" });
-        }, 900);
     });
 
     /* Mobile metric arrangement */

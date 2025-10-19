@@ -184,7 +184,6 @@
                                 <div class="detail-card detail-card--structure" data-key="structure">
                                     <div class="detail-card__header">
                                         <h3>Sentence Structure &amp; Syntax</h3>
-                                        <span class="detail-card__value" data-detail-value></span>
                                     </div>
                                     <div class="detail-card__meter">
                                         <div class="speedometer speedometer--mini" data-speed="0"></div>
@@ -194,7 +193,6 @@
                                 <div class="detail-card detail-card--tense" data-key="tense">
                                     <div class="detail-card__header">
                                         <h3>Verb Tense &amp; Consistency</h3>
-                                        <span class="detail-card__value" data-detail-value></span>
                                     </div>
                                     <div class="detail-card__meter">
                                         <div class="speedometer speedometer--mini" data-speed="0"></div>
@@ -230,29 +228,34 @@
                 </aside>
             </div>
 
-            <section class="rate-panel" hidden aria-label="Rate Markus">
-                <header>
-                    <h2>How would you grade this feedback?</h2>
-                    <p>Slide to score the experience and leave a note if you wish.</p>
-                </header>
-                <div class="rate-panel__content">
-                    <figure class="rate-panel__image">
-                        <img src="https://i.ibb.co/0Rqsb7QS/1f94806aba185003d7d6fb19a9af5306.jpg"
-                            alt="Cat wearing a tomato costume with a hopeful look.">
-                    </figure>
-                    <div class="rate-panel__controls">
-                        <div class="rate-scale">
-                            <span>F</span>
-                            <span>E</span>
-                            <span>D</span>
-                            <span>C</span>
-                            <span>B</span>
-                            <span>A</span>
+            <section class="rate-panel" hidden role="dialog" aria-modal="true"
+                aria-labelledby="rate-panel-title">
+                <div class="rate-panel__inner" role="document">
+                    <button type="button" class="rate-panel__close" aria-label="Close rate panel">&times;</button>
+                    <header>
+                        <h2 id="rate-panel-title">How would you grade this feedback?</h2>
+                        <p>Slide to score the experience and leave a note if you wish.</p>
+                    </header>
+                    <div class="rate-panel__content">
+                        <figure class="rate-panel__image">
+                            <img src="https://i.ibb.co/0Rqsb7QS/1f94806aba185003d7d6fb19a9af5306.jpg"
+                                alt="Cat wearing a tomato costume with a hopeful look.">
+                        </figure>
+                        <div class="rate-panel__controls">
+                            <div class="rate-scale">
+                                <span>F</span>
+                                <span>E</span>
+                                <span>D</span>
+                                <span>C</span>
+                                <span>B</span>
+                                <span>A</span>
+                            </div>
+                            <input type="range" min="0" max="5" value="4" class="rate-slider"
+                                aria-label="Rate the experience">
+                            <div class="rate-value" data-rate-label>B</div>
+                            <textarea class="rate-note" rows="3" placeholder="Tell us what helped the most..."></textarea>
+                            <button type="button" class="ghost-button rate-send">Send</button>
                         </div>
-                        <input type="range" min="0" max="5" value="4" class="rate-slider" aria-label="Rate the experience">
-                        <div class="rate-value" data-rate-label>B</div>
-                        <textarea class="rate-note" rows="3" placeholder="Tell us what helped the most..."></textarea>
-                        <button type="button" class="ghost-button rate-send">Send</button>
                     </div>
                 </div>
             </section>
