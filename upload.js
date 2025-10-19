@@ -554,14 +554,17 @@ const createFolderOnDisk = async () => {
             await metaWritable.close();
 
             dom.packageStatus.textContent = `Package saved in ${folderName}.`;
+            return true;
         } catch (error) {
             console.error(error);
             dom.packageStatus.textContent = "Folder creation cancelled. You can try again.";
+            return false;
         }
     } else {
         downloadBlob(jsonBlob, jsonName);
         dom.packageStatus.textContent =
             "JSON downloaded. Browser cannot write folders directly — upload to Markus manually.";
+        return true;
     }
 };
 
@@ -641,7 +644,10 @@ const bindEvents = () => {
             return;
         }
         dom.packageStatus.textContent = "Creating your coursework package...";
-        await createFolderOnDisk();
+        const success = await createFolderOnDisk();
+        if (success !== false) {
+            window.location.href = "preview.html";
+        }
     });
 
     dom.closePreview.addEventListener("click", closePreview);

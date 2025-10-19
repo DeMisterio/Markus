@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARKUS — Preview Report</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="preview.js"></script>
+</head>
+
+<body class="analysis-body">
+    <div class="background-glow" aria-hidden="true"></div>
+    <main class="page analysis-page">
+        <section class="section analysis-section">
+            <div class="analysis-board">
+                <div class="analysis-board__inner">
+                    <header class="analysis-header">
+                        <h1>Your AI examiner analysis:</h1>
+                        <p class="analysis-subhead">Your fair results:</p>
+                        <p class="analysis-warning">
+                            WARNING — THE RESULTS ARE ESTIMATED VIA AI AND ARE NEVER 100% VALID.
+                        </p>
+                    </header>
+
+                    <div class="analysis-grid">
+                        <div class="metric-stack metric-stack--left" aria-label="Primary metric cards">
+                            <button class="metric-card" type="button" data-metric="grammar" aria-expanded="false">
+                                <span class="metric-card__title">Grammar bar</span>
+                                <span class="metric-card__value">
+                                    <span class="speedometer" data-speed="78"></span>
+                                </span>
+                                <span class="metric-card__hint">Perfect! Only two run-on sentences remain.</span>
+                            </button>
+                            <button class="metric-card" type="button" data-metric="aiCheck" aria-expanded="false">
+                                <span class="metric-card__title">AI check bar</span>
+                                <span class="metric-card__value">
+                                    <span class="speedometer" data-speed="12"></span>
+                                </span>
+                                <span class="metric-card__hint">Human voice detected — only gentle smoothing suggested.</span>
+                            </button>
+                            <button class="metric-card" type="button" data-metric="lexical" aria-expanded="false">
+                                <span class="metric-card__title">Lexical density</span>
+                                <span class="metric-card__value">
+                                    <span class="speedometer" data-speed="64"></span>
+                                </span>
+                                <span class="metric-card__hint">Rich descriptive verbs support your analysis.</span>
+                            </button>
+                        </div>
+
+                        <article class="trend-card">
+                            <header class="trend-card__header">
+                                <h2>Coursework quality trend</h2>
+                                <p class="trend-card__meta">Pages analysed: 100 drafts sampled from September to April</p>
+                            </header>
+                            <div class="trend-chart" role="img"
+                                aria-label="Line chart plotting coursework grades against page counts.">
+                                <svg viewBox="0 0 200 110" preserveAspectRatio="xMidYMid meet">
+                                    <defs>
+                                        <linearGradient id="trendGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" stop-color="rgba(74, 121, 255, 0.68)" />
+                                            <stop offset="100%" stop-color="rgba(39, 197, 154, 0.38)" />
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="trend-line" d="" vector-effect="non-scaling-stroke"></path>
+                                    <g class="trend-points"></g>
+                                    <g class="trend-axis trend-axis--x"></g>
+                                    <g class="trend-axis trend-axis--y"></g>
+                                </svg>
+                            </div>
+                            <div class="trend-insight" data-state="idle">
+                                <div class="trend-insight__header">
+                                    <strong data-trend-title>Select a point to view its snapshot</strong>
+                                </div>
+                                <ul class="trend-insight__list" data-trend-list></ul>
+                                <p class="trend-insight__note" data-trend-note></p>
+                                <button type="button" class="trend-insight__close" aria-label="Clear snapshot">Close</button>
+                            </div>
+                            <p class="trend-footnote">Hover or tap the markers for snapshot feedback per batch of pages.</p>
+                        </article>
+
+                        <div class="metric-stack metric-stack--right" aria-label="Secondary metric cards">
+                            <button class="metric-card" type="button" data-metric="repetition" aria-expanded="false">
+                                <span class="metric-card__title">Repetition bar</span>
+                                <span class="metric-card__value">
+                                    <span class="speedometer" data-speed="32"></span>
+                                </span>
+                                <span class="metric-card__hint">Needs fixing at chapter three captions.</span>
+                            </button>
+                            <button class="metric-card" type="button" data-metric="handwriting" aria-expanded="false">
+                                <span class="metric-card__title">Hand-writing bar</span>
+                                <span class="metric-card__value">
+                                    <span class="speedometer" data-speed="71"></span>
+                                </span>
+                                <span class="metric-card__hint">Scan quality steady; two pages slightly faint.</span>
+                            </button>
+                            <button class="metric-card" type="button" data-metric="plagiarism" aria-expanded="false">
+                                <span class="metric-card__title">Plagiat risk</span>
+                                <span class="metric-card__value">
+                                    <span class="speedometer" data-speed="9"></span>
+                                </span>
+                                <span class="metric-card__hint">Perfect! Citations cover all quotations.</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="summary-row">
+                        <article class="grade-card summary-tile">
+                            <header class="summary-tile__header">
+                                <h2>Expected grade</h2>
+                            </header>
+                            <div class="grade-card__body">
+                                <div class="grade-card__headline">
+                                    <span class="grade-card__label">Estimated grade</span>
+                                    <span class="grade-card__grade" data-grade-letter>B</span>
+                                    <span class="grade-card__confidence">86% confidence</span>
+                                </div>
+                                <p class="grade-card__comment">Consistent upward trend driven by narrative cohesion.</p>
+                            </div>
+                        </article>
+
+                        <article class="brief-card summary-tile">
+                            <header class="summary-tile__header">
+                                <h2>Brief summary</h2>
+                            </header>
+                            <div class="brief-card__body">
+                                <div class="brief-pill">
+                                    <h3>Your strong points</h3>
+                                    <ul>
+                                        <li>Distinct visual storytelling across each chapter.</li>
+                                        <li>Clear rationale connecting artist influences.</li>
+                                        <li>Improved lighting analysis in the final shoot.</li>
+                                    </ul>
+                                </div>
+                                <div class="brief-pill">
+                                    <h3>Improvement suggestions</h3>
+                                    <ul>
+                                        <li>Expand annotation on technical camera settings.</li>
+                                        <li>Clarify how feedback informed reshoots.</li>
+                                        <li>Reduce caption repetition in chapter three.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <article class="ai-response-card">
+                        <h2>AI response</h2>
+                        <div class="ai-response-body">
+                            <p>
+                                Your portfolio demonstrates a thoughtful progression from experimentation to final outcome.
+                                Composition choices now respond directly to your research notes, especially the use of muted
+                                palettes to echo Nan Goldin&rsquo;s documentary tone. Examiner criteria highlight strong
+                                contextual understanding and effective annotation of iterative changes. Maintain this clarity
+                                when discussing aperture and shutter adjustments—two captions still rely on general statements.
+                                Overall, the submission is on track for a secure B with headroom to touch an A once technical
+                                terminology is fully embedded.
+                            </p>
+                        </div>
+                    </article>
+
+                    <footer class="analysis-actions">
+                        <div class="actions-row">
+                            <button class="ghost-button rate-trigger" type="button">Rate us</button>
+                            <button class="cta-button inline download-trigger" type="button">Download PDF report</button>
+                            <button class="ghost-button complain-trigger" type="button">Complain</button>
+                        </div>
+                    </footer>
+                </div>
+
+                <aside class="metric-detail" aria-live="polite">
+                    <div class="metric-detail__inner">
+                        <header class="metric-detail__header">
+                            <div class="metric-detail__heading">
+                                <p class="metric-detail__label">Metric insight</p>
+                                <h2 class="metric-detail__title"></h2>
+                                <span class="metric-detail__total" data-detail-total></span>
+                            </div>
+                            <button class="metric-detail__close" type="button"
+                                aria-label="Close detailed metric view">&times;</button>
+                        </header>
+                        <div class="metric-detail__content">
+                            <div class="metric-detail__info">
+                                <div class="detail-card detail-card--structure" data-key="structure">
+                                    <div class="detail-card__header">
+                                        <h3>Sentence Structure &amp; Syntax</h3>
+                                        <span class="detail-card__value" data-detail-value></span>
+                                    </div>
+                                    <div class="detail-card__meter">
+                                        <div class="speedometer speedometer--mini" data-speed="0"></div>
+                                    </div>
+                                    <p class="detail-card__note"></p>
+                                </div>
+                                <div class="detail-card detail-card--tense" data-key="tense">
+                                    <div class="detail-card__header">
+                                        <h3>Verb Tense &amp; Consistency</h3>
+                                        <span class="detail-card__value" data-detail-value></span>
+                                    </div>
+                                    <div class="detail-card__meter">
+                                        <div class="speedometer speedometer--mini" data-speed="0"></div>
+                                    </div>
+                                    <p class="detail-card__note"></p>
+                                </div>
+                                <div class="detail-card detail-card--ai" data-key="ai">
+                                    <div class="detail-card__header">
+                                        <h3>AI response</h3>
+                                    </div>
+                                    <p class="detail-card__note"></p>
+                                </div>
+                            </div>
+                            <div class="metric-detail__chart-shell">
+                                <div class="metric-detail__chart">
+                                    <svg viewBox="0 0 200 110" preserveAspectRatio="xMidYMid meet">
+                                        <defs>
+                                            <linearGradient id="detailGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                                <stop offset="0%" stop-color="rgba(74, 121, 255, 0.68)" />
+                                                <stop offset="100%" stop-color="rgba(39, 197, 154, 0.38)" />
+                                            </linearGradient>
+                                        </defs>
+                                        <path class="metric-detail__line" d="" vector-effect="non-scaling-stroke"></path>
+                                        <g class="metric-detail__points"></g>
+                                        <g class="metric-detail__axis metric-detail__axis--x"></g>
+                                        <g class="metric-detail__axis metric-detail__axis--y"></g>
+                                    </svg>
+                                </div>
+                                <p class="metric-detail__comment"></p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <section class="rate-panel" hidden aria-label="Rate Markus">
+                <header>
+                    <h2>How would you grade this feedback?</h2>
+                    <p>Slide to score the experience and leave a note if you wish.</p>
+                </header>
+                <div class="rate-panel__content">
+                    <figure class="rate-panel__image">
+                        <img src="https://i.ibb.co/0Rqsb7QS/1f94806aba185003d7d6fb19a9af5306.jpg"
+                            alt="Cat wearing a tomato costume with a hopeful look.">
+                    </figure>
+                    <div class="rate-panel__controls">
+                        <div class="rate-scale">
+                            <span>F</span>
+                            <span>E</span>
+                            <span>D</span>
+                            <span>C</span>
+                            <span>B</span>
+                            <span>A</span>
+                        </div>
+                        <input type="range" min="0" max="5" value="4" class="rate-slider" aria-label="Rate the experience">
+                        <div class="rate-value" data-rate-label>B</div>
+                        <textarea class="rate-note" rows="3" placeholder="Tell us what helped the most..."></textarea>
+                        <button type="button" class="ghost-button rate-send">Send</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="complain-panel" hidden aria-label="Talk to your AI examiner">
+                <header>
+                    <h2>Talk to your AI examiner</h2>
+                    <p>Tell us what feels unfair or unclear. A specialist will review within a working day.</p>
+                </header>
+                <div class="complain-panel__chat">
+                    <div class="chat-bubble chat-bubble--ai">
+                        <p>Hi! I&rsquo;m still learning. Drop your concern and I&rsquo;ll flag it for a human examiner.</p>
+                    </div>
+                    <div class="chat-bubble chat-bubble--user">
+                        <p>I think my repetition score ignores the contextual quotes. Could you take a second look?</p>
+                    </div>
+                </div>
+                <form class="complain-panel__form">
+                    <label class="sr-only" for="complain-message">Message</label>
+                    <textarea id="complain-message" rows="3" placeholder="Type your message..."></textarea>
+                    <button type="button" class="cta-button inline complain-send">Send</button>
+                </form>
+            </section>
+        </section>
+    </main>
+</body>
+
+</html>
